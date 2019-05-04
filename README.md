@@ -1,1 +1,1 @@
-springsecuritydemo
+学习Spring Security的练手小demo
