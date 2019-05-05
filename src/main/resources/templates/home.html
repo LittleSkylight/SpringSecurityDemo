@@ -46,6 +46,11 @@
             <p class="bg-info">无更多信息显示</p>
         </div>
 
+        <div sec:authorize="hasRole('ROLE_GOD')"> <!-- 用户类型为 ROLE_GOD 显示 -->
+            <p class="bg-info">只有这个系统的创造者才能看到这个消息！</p>
+            <h1>欢迎你！GOD！</h1>
+        </div>
+
         <form th:action="@{/logout}" method="post">
             <input type="submit" class="btn btn-primary" value="注销"/>
         </form>
