@@ -1,9 +1,11 @@
 package com.springsecurity.demo.controller;
 
 import com.springsecurity.demo.model.Msg;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
@@ -22,6 +24,23 @@ public class HomeController {
     @RequestMapping("/login")
     public String login(){
         return "login";
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    public String userPage() {
+        return "userPage";
+    }
+
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String adminPage() {
+        return "adminPage";
+    }
+
+    @RequestMapping("/403")
+    public String forbidden() {
+        return "403";
     }
 
 }
