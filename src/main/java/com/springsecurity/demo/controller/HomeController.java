@@ -37,6 +37,11 @@ public class HomeController {
         return "index";
     }
 
+    @RequestMapping("/register")
+    public String register() {
+        return "registerPage";
+    }
+
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public String userPage() {
