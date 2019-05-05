@@ -21,9 +21,20 @@ public class HomeController {
     public String hello(){
         return "hello admin";
     }
+
     @RequestMapping("/login")
     public String login(){
         return "login";
+    }
+
+    @RequestMapping("/loginError")
+    public String loginError(){
+        return "loginError";
+    }
+
+    @RequestMapping("/index")
+    public String index(){
+        return "index";
     }
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
@@ -43,4 +54,8 @@ public class HomeController {
         return "403";
     }
 
+    @RequestMapping("/welcome")
+    public String welcome() {
+        return "welcome";
+    }
 }

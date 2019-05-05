@@ -57,14 +57,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/**/*.js", "/lang/*.json", "/**/*.css", "/**/*.js", "/**/*.map", "/**/*.html",
                 "/**/*.png");
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/index")
+                .permitAll()
                 .anyRequest().authenticated() //任何请求,登录后可以访问
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .failureUrl("/login?error")//登录失败 返回error
+                .defaultSuccessUrl("/welcome")
+                .failureUrl("/loginError")//登录失败 返回error
                 .permitAll() //登录页面用户任意访问
                 .and()
                 .logout().permitAll(); //注销行为任意访问
