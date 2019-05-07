@@ -5,12 +5,14 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -47,5 +49,21 @@ public class KaptchaController {
         } finally {
             out.close();
         }
+    }
+
+    @RequestMapping("/verifyCode")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public String verifyKaptcha(Model model, HttpSession session, String verifyCode) {
+        String captchaId = (String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
+        System.out.println("验证码是：" + captchaId);
+        System.out.println("用户输入的是：" + verifyCode);
+        if (!captchaId.equals(verifyCode)) {
+            System.out.println("输入错误");
+            model.addAttribute("info", "错误的验证码");
+        } else {
+            System.out.println("输入正确");
+            model.addAttribute("info", "正确");
+        }
+        return "/index";
     }
 }

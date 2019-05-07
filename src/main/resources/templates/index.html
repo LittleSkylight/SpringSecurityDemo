@@ -1,13 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
 </head>
 <body>
 <h1>这里是任何人都能够访问的Index页！</h1>
+<h1 th:text="${info}"/>
 <img id="captchaImage" src="/getKaptchaImage" width="80" height="34" class="captcha changeCaptcha pull-left margin-r-5" alt="验证码"/>
 <a href="javascript:void(0)" onclick="refreshCode()">换一张</a>
+<form action="/verifyCode">
+    <input type="text" name="verifyCode"/>
+    <input type="submit" value="提交"/>
+</form>
+
 <script>
     function refreshCode()
     {
