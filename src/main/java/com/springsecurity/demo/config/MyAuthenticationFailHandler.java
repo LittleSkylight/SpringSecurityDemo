@@ -31,7 +31,7 @@ public class MyAuthenticationFailHandler implements AuthenticationFailureHandler
         System.out.println("username=>" + request.getParameter("username"));
 
         if (RETURN_TYPE.equals("html")) {
-            redirectStrategy.sendRedirect(request, response, "/login/index?error=true");
+            redirectStrategy.sendRedirect(request, response, "/login");
         } else {
             Map<String, Object> map = new HashMap<>();
             map.put("code","1002");

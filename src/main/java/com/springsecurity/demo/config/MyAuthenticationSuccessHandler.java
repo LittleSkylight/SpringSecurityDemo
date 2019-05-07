@@ -30,7 +30,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         System.out.println("登录成功");
         System.out.println("username=>" + request.getParameter("username"));
         if(RETURN_TYPE.equals("html")) {
-            redirectStrategy.sendRedirect(request, response, "/user/index");
+            redirectStrategy.sendRedirect(request, response, "/home");
         } else {
             Map<String, Object> map = new HashMap<>();
             map.put("code","0");

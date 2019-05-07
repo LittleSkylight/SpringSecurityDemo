@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/register", "/doRegister","/index")
                 .permitAll()
-                .antMatchers("/getKaptchaImage","/verifyCode").permitAll()
+                .antMatchers("/getKaptchaImage","/verifyCode","/loginError").permitAll()
                 .anyRequest().authenticated() //任何请求,登录后可以访问
                 .and()
                 .formLogin()
@@ -79,7 +79,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .successHandler(authenticationSuccessHandler)
                 .failureHandler(authenticationFailHandler)
                 //.defaultSuccessUrl("/welcome")
-                .failureUrl("/loginError")//登录失败 返回error
+                //.failureUrl("/loginError")//登录失败 返回error
                 .permitAll() //登录页面用户任意访问
                 .and()
                 .logout().permitAll(); //注销行为任意访问
