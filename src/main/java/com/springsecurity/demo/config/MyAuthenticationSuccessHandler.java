@@ -18,7 +18,8 @@ import java.util.Map;
 @Component
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
-    public static final String RETURN_TYPE = "html"; // 登录成功时，用来判断是返回json数据还是跳转html页面
+    // public static final String RETURN_TYPE = "html"; // 登录成功时，用来判断是返回json数据还是跳转html页面
+    public static final String RETURN_TYPE = "json"; // 登录成功时，用来判断是返回json数据还是跳转html页面
 
     @Autowired
     private ObjectMapper objectMapper;

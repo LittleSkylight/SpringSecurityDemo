@@ -47,7 +47,8 @@
             <img src="/getKaptchaImage" onclick="changeCaptcha()" width="80" height="34" id="captcha" class="captcha changeCaptcha pull-left margin-r-5" alt="验证码"/>
             <a href="javascript:changeCaptcha()">换一张</a>
             <input type="text" name="kaptcha"/>
-            <input type="submit" id="login" value="Login" class="btn btn-primary" />
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="button" id="login" value="Login" class="btn btn-primary" onclick="Login()" />
         </form>
     </div>
     <div>
@@ -55,43 +56,39 @@
     </div>
 
 </div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 <script type="text/javascript">
     function changeCaptcha() {
         var url = '/getKaptchaImage';
         $("#captcha").attr("src", url);
     }
-
-    $(document).on("click", "#login", function () {
-        var randomAnim = Math.floor(Math.random() * 7);
-        var _ctx = $("meta[name='ctx']").attr("content");
-        var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
+    
+    function Login()
+    {
         $.ajax({
-            url: _ctx + "/login",
+            url: "/login",
             type: 'POST',
+            async:false,
             data: $("#login_form").serialize(),
-            beforeSend: function (request) {
-                request.setRequestHeader(header, token);
-            },
+
             success: function (data) {
                 console.log(data);
-                if (data.status == 'ok') {
-                    alert("登陆成功！");
-                    //登录成功
-                    window.location.reload();
-                } else if (data.status == 'error') {
+                if (data.msg == '登录成功') {
+                    alert("登录成功！");//登录成功
+                    window.location.href="/home";
+                } else if (data.msg == '登录失败') {
                     alert("用户名或密码错误!");
+                    location.reload();
                 } else {
                     alert("验证码错误");
+                    location.reload();
                 }
             },
             error: function () {
-               alert("出现错误，请尝试刷新页面!");
+                alert("出现错误，请尝试刷新页面!");
             }
         });
-        return false;
-    });
+    }
 </script>
-<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 </body>
 </html>
