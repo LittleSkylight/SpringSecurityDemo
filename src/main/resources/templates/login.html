@@ -47,8 +47,19 @@
             <input type="submit" id="login" value="Login" class="btn btn-primary" />
         </form>
     </div>
+    <div>
+        <!--<img src="/getKaptchaImage" onclick="this.src='/getKaptchaImage'" width="80" height="34" id="captcha" class="captcha changeCaptcha pull-left margin-r-5" alt="验证码"/>-->
+        <img src="/getKaptchaImage" onclick="this.src='/getKaptchaImage'" width="80" height="34" id="captcha" class="captcha changeCaptcha pull-left margin-r-5" alt="验证码"/>
+        <a href="javascript:changeCaptcha()">换一张</a>
+    </div>
 
 </div>
-
+<script type="text/javascript">
+    function changeCaptcha() {
+        var url = '/getKaptchaImage';
+        $("#captcha").attr("src", url);
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 </body>
 </html>

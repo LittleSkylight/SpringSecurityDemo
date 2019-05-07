@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
 </head>
 <body>
 <h1>这里是任何人都能够访问的Index页！</h1>
+<img id="captchaImage" src="/getKaptchaImage" width="80" height="34" class="captcha changeCaptcha pull-left margin-r-5" alt="验证码"/>
+<a href="javascript:void(0)" onclick="refreshCode()">换一张</a>
+<script>
+    function refreshCode()
+    {
+        $('#captchaImage').attr("src", "/getKaptchaImage?timestamp=" + (new Date()).valueOf());
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 </body>
 </html>
