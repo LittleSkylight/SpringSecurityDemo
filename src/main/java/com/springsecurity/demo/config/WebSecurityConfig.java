@@ -1,6 +1,8 @@
 package com.springsecurity.demo.config;
 
+import com.springsecurity.demo.filter.KaptchaAuthenticationFilter;
 import com.springsecurity.demo.service.CustomUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -13,12 +15,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled=true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private MyAuthenticationSuccessHandler authenticationSuccessHandler;
+    @Autowired
+    private MyAuthenticationFailHandler authenticationFailHandler;
 
     @Bean
     UserDetailsService customUserService() {
@@ -60,17 +67,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.addFilterBefore(new KaptchaAuthenticationFilter("/login", "/loginError"), UsernamePasswordAuthenticationFilter.class)
+                .authorizeRequests()
                 .antMatchers("/register", "/doRegister","/index")
                 .permitAll()
+                .antMatchers("/getKaptchaImage","/verifyCode").permitAll()
                 .anyRequest().authenticated() //任何请求,登录后可以访问
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/welcome")
+                .successHandler(authenticationSuccessHandler)
+                .failureHandler(authenticationFailHandler)
+                //.defaultSuccessUrl("/welcome")
                 .failureUrl("/loginError")//登录失败 返回error
                 .permitAll() //登录页面用户任意访问
                 .and()
                 .logout().permitAll(); //注销行为任意访问
+
     }
 }

@@ -21,7 +21,6 @@ public class KaptchaController {
     private Producer captchaProducer;
 
     @RequestMapping("/getKaptchaImage")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void getKaptchaImage(HttpServletRequest request, HttpServletResponse response) throws Exception {
         response.setDateHeader("Expires", 0);
         // Set standard HTTP/1.1 no-cache headers.
@@ -52,7 +51,6 @@ public class KaptchaController {
     }
 
     @RequestMapping("/verifyCode")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public String verifyKaptcha(Model model, HttpSession session, String verifyCode) {
         String captchaId = (String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
         System.out.println("验证码是：" + captchaId);

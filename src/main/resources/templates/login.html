@@ -35,7 +35,7 @@
         <p th:if="${param.logout}" class="bg-warning">已成功注销</p><!-- 1 -->
         <p th:if="${param.error}" class="bg-danger">有错误，请重试</p> <!-- 2 -->
         <h2>使用账号密码登录</h2>
-        <form name="form" th:action="@{/login}" action="/login" method="POST"> <!-- 3 -->
+        <form name="form" th:action="@{/login}" action="/login" method="POST" id="login_form"> <!-- 3 -->
             <div class="form-group">
                 <label for="username">账号</label>
                 <input type="text" class="form-control" name="username" value="" placeholder="账号" />
@@ -44,13 +44,14 @@
                 <label for="password">密码</label>
                 <input type="password" class="form-control" name="password" placeholder="密码" />
             </div>
+            <img src="/getKaptchaImage" onclick="changeCaptcha()" width="80" height="34" id="captcha" class="captcha changeCaptcha pull-left margin-r-5" alt="验证码"/>
+            <a href="javascript:changeCaptcha()">换一张</a>
+            <input type="text" name="kaptcha"/>
             <input type="submit" id="login" value="Login" class="btn btn-primary" />
         </form>
     </div>
     <div>
         <!--<img src="/getKaptchaImage" onclick="this.src='/getKaptchaImage'" width="80" height="34" id="captcha" class="captcha changeCaptcha pull-left margin-r-5" alt="验证码"/>-->
-        <img src="/getKaptchaImage" onclick="changeCaptcha()" width="80" height="34" id="captcha" class="captcha changeCaptcha pull-left margin-r-5" alt="验证码"/>
-        <a href="javascript:changeCaptcha()">换一张</a>
     </div>
 
 </div>
@@ -59,6 +60,37 @@
         var url = '/getKaptchaImage';
         $("#captcha").attr("src", url);
     }
+
+    $(document).on("click", "#login", function () {
+        var randomAnim = Math.floor(Math.random() * 7);
+        var _ctx = $("meta[name='ctx']").attr("content");
+        var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+        $.ajax({
+            url: _ctx + "/login",
+            type: 'POST',
+            data: $("#login_form").serialize(),
+            beforeSend: function (request) {
+                request.setRequestHeader(header, token);
+            },
+            success: function (data) {
+                console.log(data);
+                if (data.status == 'ok') {
+                    alert("登陆成功！");
+                    //登录成功
+                    window.location.reload();
+                } else if (data.status == 'error') {
+                    alert("用户名或密码错误!");
+                } else {
+                    alert("验证码错误");
+                }
+            },
+            error: function () {
+               alert("出现错误，请尝试刷新页面!");
+            }
+        });
+        return false;
+    });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 </body>
