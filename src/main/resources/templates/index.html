@@ -1,19 +1,72 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
+    <link href="https://cdn.bootcss.com/social-share.js/1.0.16/css/share.min.css" rel="stylesheet">
+    <link href="http://cdn.amazeui.org/amazeui/2.7.2/css/amazeui.css" rel="stylesheet">
 </head>
 <body>
 <h1>这里是任何人都能够访问的Index页！</h1>
-<h1 th:text="${info}"/>
 <img id="captchaImage" src="/getKaptchaImage" width="80" height="34" class="captcha changeCaptcha pull-left margin-r-5" alt="验证码"/>
 <a href="javascript:void(0)" onclick="refreshCode()">换一张</a>
 <form action="/verifyCode">
     <input type="text" name="verifyCode"/>
     <input type="submit" value="提交"/>
 </form>
+
+    <br>
+
+    <h3>5 social share: QQ Qzone 微信 微博 豆瓣</h3>
+    <div class="social-share col-md-offset-2" data-initialized="true" data-url="https://www.zhyocean.cn/article/ "  data-title="">
+        &#8195;&#8195;&#8195;&#8195;&#8195;
+        <a href="#" class="social-share-icon icon-qq" data-am-popover="{content: '分享到QQ', trigger: 'hover focus'}">
+        </a>
+        <a href="#" class="social-share-icon icon-qzone" data-am-popover="{content: '分享至QQ空间', trigger: 'hover focus'}"></a>
+        <a href="#" class="social-share-icon icon-wechat"></a>
+        <a href="#" class="social-share-icon icon-weibo" data-am-popover="{content: '分享至微博', trigger: 'hover focus'}"></a>
+        <a href="#" class="social-share-icon icon-douban" data-am-popover="{content: '分享至豆瓣', trigger: 'hover focus'}"></a>
+    </div>
+
+    <br>
+
+    <h3>3 social share: 微博 QQ Qzone </h3>
+    <div class="social-share" data-sites="weibo, qq, qzone" data-weibo-title="这个标题只有的分享到微博时有用，其它标题为全局标题"></div>
+
+    <br>
+
+    <h3>Only social share</h3>
+    <div class="social-share">
+    </div>
+
+    <br>
+
+    <h3>Only social share：except Google Twitter Facebook</h3>
+    <div class="social-share" data-disabled="google,twitter,facebook">
+    </div>
+
+    <br>
+
+    <h3>Only share-component：except Google Twitter Facebook : add description</h3>
+    <div class="share-component" data-disabled="google,twitter,facebook" data-description="Share.js - 一键分享到微博，QQ空间，腾讯微博，人人，豆瓣"></div>
+
+    <br>
+    <h3>空：设置了五个，只显示两个</h3>
+    <div class="test">
+    </div>
+
+    <br>
+    <h3>空：id = test</h3>
+    <div class="test">
+    </div>
+
+    <h3>class：share-component</h3>
+    <div class="share-component">
+    </div>
+
+   <h3>class：social-share</h3>
+   <div class="social-share">
+   </div>
 
 <script>
     function refreshCode()
@@ -22,5 +75,27 @@
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script src="http://cdn.amazeui.org/amazeui/2.7.2/js/amazeui.min.js"></script>
+<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/social-share.min.js"></script>
+<!--<script src="https://cdn.bootcss.com/social-share.js/1.0.16/js/jquery.share.min.js"></script>-->
+<script>
+    var $config = {
+        title: '你好,美食',
+        description: '我在你好美食,分享吃货间的快乐,现在邀请你的加入~快来和我一起分享美食吧~',
+        url: 'www.baidurex.com',
+        source: 'www.baidurex.com',
+        image: 'http://hellofood.fun/webicon.png',
+        summary : '吃货召唤', //相当于description
+        sites: ['weibo','wechat','douban','qzone','qq'], // 启用的站点
+        disabled: ['google', 'facebook', 'twitter'], // 禁用的站点
+        wechatQrcodeTitle: "微信扫一扫：分享", // 微信二维码提示文字
+        wechatQrcodeHelper: '立即下载发送专属二维码,邀请朋友加入',
+    };
+
+    socialShare('.test', $config);
+    socialShare('#test', $config);
+    //socialShare('.share-component', $config);
+    //只显示两个图标
+</script>
 </body>
 </html>
