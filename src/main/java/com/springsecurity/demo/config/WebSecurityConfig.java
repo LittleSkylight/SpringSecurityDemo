@@ -69,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.addFilterBefore(new KaptchaAuthenticationFilter("/login", "/loginError"), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/register", "/doRegister","/index","/owl")
+                .antMatchers("/register", "/doRegister","/index")
                 .permitAll()
                 .antMatchers("/getKaptchaImage","/verifyCode","/loginError").permitAll()
                 .anyRequest().authenticated() //任何请求,登录后可以访问
