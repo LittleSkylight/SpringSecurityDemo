@@ -27,6 +27,11 @@ public class HomeController {
         return "login";
     }
 
+    @RequestMapping("/owl")
+    public String owl(){
+        return "owl";
+    }
+
     @RequestMapping("/loginError")
     public String loginError(){
         return "loginError";
