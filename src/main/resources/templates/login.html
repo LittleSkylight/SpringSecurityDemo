@@ -45,13 +45,13 @@
                     <div class="control-group">
                         <div class="controls">
                             <img src="/getKaptchaImage" onclick="changeCaptcha()" width="80" height="34" id="captcha" class="captcha changeCaptcha pull-left margin-r-5" alt="验证码"/>
-                            <a href="javascript:changeCaptcha()">点击刷新</a>
+                            <a href="javascript:changeCaptcha()" class="btn btn-link">点击刷新</a>
                         </div>
                     </div>
                 </div>
                 <div class="form-actions">
-                    <a href="https://www.jianshu.com/u/a40d61a49221/" tabindex="5"
-                       class="btn pull-left btn-link">简书@我没有三颗心脏</a>
+                    <a href="https://github.com/LittleSkylight" tabindex="5"
+                       class="btn pull-left btn-link">GitHub&#32;@小天窗已失明</a>
                     <button id="login_button" tabindex="4" class="btn btn-primary" onclick="Login()">Login</button>
                 </div>
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
